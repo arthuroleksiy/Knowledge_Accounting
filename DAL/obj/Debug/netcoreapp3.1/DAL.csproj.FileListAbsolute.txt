@@ -1,0 +1,12 @@
+C:\Users\Артур\source\repos\WebApplication1\DAL\bin\Debug\netcoreapp3.1\DAL.deps.json
+C:\Users\Артур\source\repos\WebApplication1\DAL\bin\Debug\netcoreapp3.1\DAL.runtimeconfig.json
+C:\Users\Артур\source\repos\WebApplication1\DAL\bin\Debug\netcoreapp3.1\DAL.runtimeconfig.dev.json
+C:\Users\Артур\source\repos\WebApplication1\DAL\bin\Debug\netcoreapp3.1\DAL.dll
+C:\Users\Артур\source\repos\WebApplication1\DAL\bin\Debug\netcoreapp3.1\DAL.pdb
+C:\Users\Артур\source\repos\WebApplication1\DAL\obj\Debug\netcoreapp3.1\DAL.csprojAssemblyReference.cache
+C:\Users\Артур\source\repos\WebApplication1\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfoInputs.cache
+C:\Users\Артур\source\repos\WebApplication1\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfo.cs
+C:\Users\Артур\source\repos\WebApplication1\DAL\obj\Debug\netcoreapp3.1\DAL.dll
+C:\Users\Артур\source\repos\WebApplication1\DAL\obj\Debug\netcoreapp3.1\DAL.pdb
+C:\Users\Артур\source\repos\WebApplication1\DAL\obj\Debug\netcoreapp3.1\DAL.genruntimeconfig.cache
+C:\Users\Артур\source\repos\WebApplication1\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CoreCompileInputs.cache
