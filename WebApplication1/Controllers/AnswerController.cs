@@ -24,43 +24,101 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<AnswersModel>> Get()
         {
-            return AnswerService.GetAll().ToArray();
-            
+            try
+            {
+                var result = AnswerService.GetAll().ToArray();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<AnswersModel>>> GetById(int id)
         {
-            return new ObjectResult(await AnswerService.GetByIdAsync(id));
+            try 
+            { 
+                var result = await AnswerService.GetByIdAsync(id);
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+
+                    return Ok(result);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult> Add([FromBody] AnswersModel answersModel)
         {
 
+            try 
+            {
+                if (answersModel == null)
+                {
+                    return BadRequest("Answer object is null");
+                }
 
-            await AnswerService.AddAsync(answersModel);
-            return Ok(answersModel);
+                await AnswerService.AddAsync(answersModel); 
+                return CreatedAtRoute("AnswerId", new { id = answersModel.AnswerId }, answersModel);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(AnswersModel answersModel)
+        public async Task<ActionResult> Update(int id, AnswersModel answersModel)
         {
+            try 
+            {
+                if (answersModel == null)
+                {
+                    return BadRequest("Answer object is null");
+                }
 
-            await AnswerService.UpdateAsync(answersModel);
-
-            return NoContent();
-
+                await AnswerService.UpdateAsync(answersModel);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
-        //DELETE: /api/books/1
         [HttpDelete("{id}")]
-        //[HttpDelete("/api/books/{id}")]
         public async Task<ActionResult> Delete(int id)
         {
+            try
+            {
+                var result = await AnswerService.GetByIdAsync(id);
 
-            await AnswerService.DeleteByIdAsync(id);
-            return Ok(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                await AnswerService.DeleteByIdAsync(id);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
 
         }
     }

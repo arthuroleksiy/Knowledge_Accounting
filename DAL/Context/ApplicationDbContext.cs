@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Security.AccessControl;
 using System.Linq;
 using DAL.Entities.Results;
+using System.Threading.Tasks;
 
 namespace DAL.Context
 {
@@ -20,13 +21,11 @@ namespace DAL.Context
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
             //Database.EnsureDeleted();
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
 
-        public static UserManager<ApplicationUser> UserManager { get; set; }
 
         public DbSet<AllTest> AllTests { get; set; }
         public DbSet<Question> Questions { get; set; }
@@ -42,7 +41,7 @@ namespace DAL.Context
         {
             optionsBuilder
                 .UseLazyLoadingProxies()
-                .UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Knowledge2; Integrated Security = True;MultipleActiveResultSets=true;");
+                .UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = KnowledgeSystem4; Integrated Security = True;MultipleActiveResultSets=true;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -71,21 +70,29 @@ namespace DAL.Context
             //modelBuilder.Entity<Answer>().HasOne<Question>(i => i.Question).WithOne(i => i.CorrectAnswer).HasForeignKey<Question>(i => i.QuestionId);
             //modelBuilder.Entity<Answer>().HasOne<Question>(i => i.CorrectQuestion).WithOne(i => i.).HasForeignKey<Question>(i => i.QuestionId);
             modelBuilder.Entity<Knowledge>().HasKey(g => g.KnowledgeId);
-            modelBuilder.Entity<Knowledge>().HasMany(q => q.Questions).WithOne(q => q.Knowledge).HasForeignKey(i => i.KnowledgeId);
-           /* 
-            modelBuilder.Entity<KnowledgeUser>()
-                   .HasKey(t => new { t.KnowledgeId, t.UserId });
+            modelBuilder.Entity<Knowledge>().HasMany(q => q.Questions).WithOne(q => q.Knowledge).HasForeignKey(i => i.KnowledgeId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<KnowledgeUser>()
-                .HasOne(ub => ub.User)
-                .WithMany()
-                .HasForeignKey(ub => ub.UserId).OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<KnowledgeUser>()
-                .HasOne(ub => ub.Knowledge)
-                .WithMany()
-                .HasForeignKey(ub => ub.KnowledgeId).OnDelete(DeleteBehavior.Restrict);
-            */
+            modelBuilder.Entity<QuestionResult>().HasOne(i => i.Question).WithMany(i => i.QuestionResults).HasForeignKey(i => i.QuestionId).OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<AnswerResult>().HasOne(i => i.QuestionResult).WithOne(i => i.AnswerResult).HasForeignKey<QuestionResult>(i => i.QuestionResultId).OnDelete(DeleteBehavior.Restrict);
+
+            // modelBuilder.Entity<QuestionResult>().HasOne(i => i.Question).WithMany(i => i.QuestionResults).HasForeignKey(i => i.QuestionId).OnDelete(DeleteBehavior.Restrict);
+
+            /* 
+             modelBuilder.Entity<KnowledgeUser>()
+                    .HasKey(t => new { t.KnowledgeId, t.UserId });
+
+             modelBuilder.Entity<KnowledgeUser>()
+                 .HasOne(ub => ub.User)
+                 .WithMany()
+                 .HasForeignKey(ub => ub.UserId).OnDelete(DeleteBehavior.Restrict);
+
+             modelBuilder.Entity<KnowledgeUser>()
+                 .HasOne(ub => ub.Knowledge)
+                 .WithMany()
+                 .HasForeignKey(ub => ub.KnowledgeId).OnDelete(DeleteBehavior.Restrict);
+             */
             //modelBuilder.Entity<ResultQuestion>().HasOne(i => i.UsersAnswer).WithOne(i => i.ResultQuestion).HasForeignKey<Answer>(j => j.ResultQuestionId).OnDelete(DeleteBehavior.Restrict); ;
             //modelBuilder.Entity<TestQuestion>().HasOne(i => i.CorrectAnswer).WithOne(i => i.TestQuestion).HasForeignKey<Answer>(j => j.TestQuestionId).OnDelete(DeleteBehavior.Restrict);
             //modelBuilder.Entity<ResultQuestion>().HasOne(i => i.TestResult).WithMany(i => i.ResultQuestions).HasForeignKey(j => j.TestResultId);
@@ -687,6 +694,67 @@ namespace DAL.Context
 
 
 
+
+            List<ApplicationRole> applicationRole = new List<ApplicationRole>() {
+            new ApplicationRole { Id = 1, Name = "Admin", NormalizedName = "ADMIN", ConcurrencyStamp = Guid.NewGuid().ToString() },
+            new ApplicationRole { Id = 2, Name = "User", NormalizedName = "USER", ConcurrencyStamp = Guid.NewGuid().ToString() }
+            };
+
+
+            modelBuilder.Entity<ApplicationRole>().HasData(applicationRole); 
+            
+            List<ApplicationUser> applicationUser = new List<ApplicationUser>() {
+            new ApplicationUser { Id = 1,  Email = "arturoleksii@gmail.com", UserName= "Arthur", SecurityStamp= Guid.NewGuid().ToString(), NormalizedUserName = "ARTUR", PasswordHash = BCrypt.Net.BCrypt.HashPassword("Ukrainakiev_234")},
+            new ApplicationUser { Id = 2, Email = "User@gmail.com", UserName = "User", NormalizedUserName = "USER", ConcurrencyStamp = Guid.NewGuid().ToString(), PasswordHash = BCrypt.Net.BCrypt.HashPassword("User_1") }
+            };
+
+            modelBuilder.Entity<ApplicationUser>().HasData(applicationUser);
+            /*Task.Run(() =>
+            {
+                UserManager.AddToRoleAsync(applicationUser.First(),applicationRole.First().Name);
+                UserManager.AddToRoleAsync(applicationUser.Last(), applicationRole.Last().Name);
+
+            });*/
+            modelBuilder.Entity<UserRole>().HasData(
+                new UserRole { RoleId = 1, UserId = 1 },
+                new UserRole { RoleId = 2, UserId = 2 }
+                );
+            List<KnowledgeResult> knowledgeResult = new List<KnowledgeResult>() {
+                 new KnowledgeResult { UserId= 2, Date = DateTime.Now, KnowledgeResultId = 1 , KnowledgeId = 1, Result = 60  },
+             };
+
+            modelBuilder.Entity<KnowledgeResult>().HasData(knowledgeResult);
+
+
+
+            List<QuestionResult> questionsResult = new List<QuestionResult>() {
+                new QuestionResult {QuestionResultId = 1 , QuestionId = 1, KnowledgeResultId = 1/*, AnswerResult =  new AnswerResult {AnswerId = 3, QuestionResultId = 1, AnswerResultId = 1}*/ },
+                new QuestionResult {QuestionResultId = 2,QuestionId = 2,  KnowledgeResultId = 1/*, AnswerResult = new AnswerResult {AnswerId = 5, QuestionResultId = 2, AnswerResultId = 2}*/ },
+                new QuestionResult {QuestionResultId = 3, QuestionId = 3, KnowledgeResultId = 1/*, AnswerResult =  new AnswerResult {AnswerId = 10, QuestionResultId = 3, AnswerResultId = 3}*/},
+                new QuestionResult {QuestionResultId = 4,QuestionId = 4,  KnowledgeResultId = 1/*, AnswerResult = new AnswerResult {AnswerId = 13, QuestionResultId = 4, AnswerResultId = 4}*/ },
+                new QuestionResult {QuestionResultId = 5,QuestionId = 5, KnowledgeResultId = 1/*, AnswerResult = new AnswerResult {AnswerId = 17, QuestionResultId = 5, AnswerResultId = 5}*/ }
+            };
+
+            modelBuilder.Entity<QuestionResult>().HasData(questionsResult);
+            
+           // List<AnswerResult> answersResult = new List<AnswerResult>() {
+           //     new AnswerResult {AnswerId = 3/*, QuestionResultId = 1*/, AnswerResultId = 1, QuestionResult = questionsResult.Where(i => i.QuestionResultId == 1).First()},
+            //    new AnswerResult {AnswerId = 5/*, QuestionResultId = 2*/, AnswerResultId = 2, QuestionResult = questionsResult.Where(i => i.QuestionResultId == 1).First()},
+            //    new AnswerResult {AnswerId = 10/*, QuestionResultId = 3*/, AnswerResultId = 3, QuestionResult = questionsResult.Where(i => i.QuestionResultId == 1).First()},
+           //     new AnswerResult {AnswerId = 13/*, QuestionResultId = 4*/, AnswerResultId = 4, QuestionResult = questionsResult.Where(i => i.QuestionResultId == 1).First()},
+            //    new AnswerResult {AnswerId = 17/*, QuestionResultId = 5*/, AnswerResultId = 5, QuestionResult = questionsResult.Where(i => i.QuestionResultId == 1).First()}
+           //     };
+
+            List<AnswerResult> answersResult = new List<AnswerResult>() {
+                new AnswerResult {AnswerId = 3, QuestionResultId = 1, AnswerResultId = 1 },
+                new AnswerResult {AnswerId = 5, QuestionResultId = 2, AnswerResultId = 2 },
+                new AnswerResult {AnswerId = 10, QuestionResultId = 3, AnswerResultId = 3 },
+                new AnswerResult {AnswerId = 13, QuestionResultId = 4, AnswerResultId = 4 },
+                new AnswerResult {AnswerId = 17, QuestionResultId = 5, AnswerResultId = 5  }
+                };
+
+
+            modelBuilder.Entity<AnswerResult>().HasData(answersResult);
         }
     }
 }

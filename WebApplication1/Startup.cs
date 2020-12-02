@@ -17,7 +17,6 @@ using Microsoft.EntityFrameworkCore;
 using BLL;
 using System.Reflection;
 using BLL.Infrastructure;
-using WebApplication1.JwtMiddleware;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using System.Text;
@@ -36,15 +35,10 @@ namespace WebApplication1
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
             services.AddCors();
-            //services.AddControllersWithViews()
-            //.AddNewtonsoftJson(options =>
-            // options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -56,16 +50,12 @@ namespace WebApplication1
             });
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddDbContext<ApplicationDbContext>(options =>
-                   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("KnowledgeSystem2")));
+                   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("WebApplication1")));
 
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-            //services.AddIdentity<ApplicationUser, ApplicationRole>()
-            //.AddEntityFrameworkStores<ApplicationDbContext>();
-            //.AddDefaultTokenProviders();
-
             services.AddScoped<IAnswersRepository, AnswersRepository>();
             services.AddScoped<IAllTestsRepository, AllTestsRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
@@ -83,18 +73,15 @@ namespace WebApplication1
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IQuestionToQuestionModel, QuestionToQuestionModel>();
             services.AddScoped<IKnowledgeToKnowledgeModel, KnowledgeToKnowledgeModel>();
+            services.AddScoped<ITestResultsRepository, TestResultsRepository>();
+            services.AddScoped<ITestResultService, TestResultService>();
+            services.AddScoped<IAnswerResultService, AnswerResultService>();
+            services.AddScoped<IQuestionResultService, QuestionResultService>();
+            services.AddScoped<IKnowledgeResultToKnowledgeResultModel, KnowledgeResultToKnowledgeResultModel>();
             services.AddAutoMapper(typeof(AutoMapping).GetTypeInfo().Assembly);
 
-            services.AddCors();
-            services.AddControllers();
+            
 
-            // configure strongly typed settings object
-            // var mappingConfig = new MapperConfiguration(mc =>
-            //{
-            //     mc.AllowNullCollections = true;
-            // });
-
-            //services.AddAutoMapper(mappingConfig.CreateMapper(), typeof(AutoMapping).GetTypeInfo().Assembly );
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -121,7 +108,6 @@ namespace WebApplication1
             
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
-            // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthorization(options =>
@@ -154,7 +140,6 @@ namespace WebApplication1
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -171,17 +156,14 @@ namespace WebApplication1
                  c.SerializeAsV2 = true;
              });
              
-            app.UseAuthentication();
-            //app.UseAuthentication();
-            app.UseAuthorization();
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
 
-            // custom jwt auth middleware
-            app.UseMiddleware<JwtMiddleware.JwtMiddleware>();
-            //app.UseMvc();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseSwaggerUI(c =>
             {
@@ -202,9 +184,6 @@ namespace WebApplication1
             if (options.SameSite > SameSiteMode.Unspecified)
             {
                 var userAgent = httpContext.Request.Headers["User-Agent"].ToString();
-                // TODO: Используйте выбранную библиотеку User Agent здесь.
-                
-                    // Для .NET Core < 3.1 установите SameSite = -1
                     options.SameSite = SameSiteMode.Unspecified;
                 
             }

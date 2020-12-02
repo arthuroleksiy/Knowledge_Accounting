@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "l27S0AykoUbSv+p+kIJ2GBOpV4oZTSCGZkFJwpeB63nhkTguvyOpOH9tXhdixX0RJcLkF6xkA+UObKBHhyd5nA==",
+  "dgSpecHash": "zzQIu59cIRo+LeUWq6mJZIaX+KbeFVP+iac9rPEOL27C4fvPiMsDzN0XQxSV3271hjJExqfbemSw21xpxk/nhw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Артур\\source\\repos\\WebApplication1\\BLL\\BLL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Артур\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
+    "C:\\Users\\Артур\\.nuget\\packages\\bcrypt.net-next\\4.0.0\\bcrypt.net-next.4.0.0.nupkg.sha512",
     "C:\\Users\\Артур\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
     "C:\\Users\\Артур\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\Артур\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

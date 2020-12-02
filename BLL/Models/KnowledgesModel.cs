@@ -11,7 +11,7 @@ namespace BLL.Models
         public string KnowledgeName { get; set; }
         public ICollection<QuestionsModel> Questions { get; set; }
         public int AllTestId { get; set; }
-        public AllTest AllTest { get; set; }
+        //public AllTest AllTest { get; set; }
         //public ICollection<KnowledgeUser> KnowledgeUser { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using DAL.Context;
 using DAL.Entities;
 using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +17,11 @@ namespace DAL.Repositories
         {
             this.dbContext = dbContext;
         }
-        public Task AddAsync(AllTest entity)
+        /*public Task AddAsync(AllTest entity)
         {
             throw new NotImplementedException();
-        }
+        }*/
 
-        public void Delete(AllTest entity)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task DeleteByIdAsync(int id)
         {
@@ -36,15 +33,34 @@ namespace DAL.Repositories
             return dbContext.AllTests;
         }
 
+        public async Task AddAsync(AllTest entity)
+        {
+            await Task.Run(() => dbContext.AllTests.Add(entity));
+        }
+
+        public void Delete(AllTest entity)
+        {
+            if (entity != null)
+            {
+                dbContext.Entry(entity).State = EntityState.Deleted;
+                dbContext.SaveChanges();
+            }
+        }
+
         public Task<AllTest> GetByIdAsync(int id)
         {
+            return Task.Run(() => {
 
-            throw new NotImplementedException();
+                AllTest answer = dbContext.AllTests.Find(id);
+                return answer;
+            });
         }
 
         public void Update(AllTest entity)
         {
-            throw new NotImplementedException();
+            dbContext.Entry(entity).State = EntityState.Modified;
         }
+
+        
     }
 }

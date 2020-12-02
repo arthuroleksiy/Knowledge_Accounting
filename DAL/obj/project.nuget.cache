@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "1qdNYzo+vFOwSNvou5cTGmNn9qjnJMpY1x/DPiQ60c96uZdfX5CmCfrBJsFeaRB28oXxrE1s9xljIegWR84KPA==",
+  "dgSpecHash": "SNX0vf719+VL17FILYs+GeRpOEh8CPZj0zmn6M0dX2Va5rqA5OPs7hQm48prj00cKflr0fHEtYXOjWu8PgeYYg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Артур\\source\\repos\\WebApplication1\\DAL\\DAL.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Артур\\.nuget\\packages\\bcrypt.net-next\\4.0.0\\bcrypt.net-next.4.0.0.nupkg.sha512",
     "C:\\Users\\Артур\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
     "C:\\Users\\Артур\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\Артур\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

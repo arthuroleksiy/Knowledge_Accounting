@@ -9,7 +9,8 @@ namespace DAL.Entities.Results
     {
         //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int KnowledgeResultId { get; set; }
-        public string KnowledgeName { get; set; }
+        public int KnowledgeId { get; set; }
+        public virtual Knowledge Knowledge { get; set; }
         public DateTime Date { get; set; }
         public int Result { get; set; }
         public virtual ICollection<QuestionResult> QuestionResults { get; set; }

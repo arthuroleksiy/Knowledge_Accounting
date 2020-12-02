@@ -30,7 +30,7 @@ namespace BLL.Services
 
 
         public IEnumerable<RoleModel> GetAll()
-        {
+        { 
             var result = UnitOfWork.RoleRepository.GetRoles();
             return mapper.Map<IEnumerable<ApplicationRole>, List<RoleModel>>(result);
         }

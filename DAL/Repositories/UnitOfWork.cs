@@ -20,12 +20,24 @@ namespace DAL.Repositories
         private IKnowledgeResultsRepository knowledgeResultRepository;
         private IAnswerResultsRepository answersResultsReposistory;
         private IQuestionResultsRepository questionResultRepository;
+        private ITestResultsRepository testResultsRepository;
         private IUserRepository userRepositry;
         private IRoleRepository roleRepositry;
         //private ApplicationUserManager userManager;
         public UnitOfWork(ApplicationDbContext db)
         {
             this.db = db;
+        }
+
+        public ITestResultsRepository TestResultsRepository
+        {
+            get
+            {
+                if (testResultsRepository == null)
+                    testResultsRepository = new TestResultsRepository(db);
+
+                return testResultsRepository;
+            }
         }
 
         public IAllTestsRepository AllTestsRepository

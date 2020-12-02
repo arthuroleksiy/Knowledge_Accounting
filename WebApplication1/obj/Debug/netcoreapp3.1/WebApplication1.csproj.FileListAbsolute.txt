@@ -1,6 +1,8 @@
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\WebApplication1.csprojAssemblyReference.cache
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\WebApplication1.AssemblyInfoInputs.cache
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\WebApplication1.AssemblyInfo.cs
+C:\Users\Артур\source\repos\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\WebApplication1.csproj.CoreCompileInputs.cache
+C:\Users\Артур\source\repos\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\WebApplication1.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Knowledge-client\angular.json
@@ -21,7 +23,9 @@ C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netco
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\WebApplication1.pdb
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\AutoMapper.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\BCrypt.Net-Next.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Castle.Core.dll
+C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
@@ -30,6 +34,7 @@ C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netco
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
@@ -43,6 +48,7 @@ C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netco
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Core.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
@@ -86,9 +92,3 @@ C:\Users\Артур\source\repos\WebApplication1\WebApplication1\obj\Debug\netco
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\WebApplication1.dll
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\WebApplication1.pdb
 C:\Users\Артур\source\repos\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\WebApplication1.genruntimeconfig.cache
-C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
-C:\Users\Артур\source\repos\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
-C:\Users\Артур\source\repos\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\WebApplication1.csproj.CoreCompileInputs.cache
-C:\Users\Артур\source\repos\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\WebApplication1.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\Артур\source\repos\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\WebApplication1.MvcApplicationPartsAssemblyInfo.cache

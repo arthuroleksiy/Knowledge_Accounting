@@ -10,5 +10,6 @@ namespace BLL.Interfaces
     public interface IKnowledgeToKnowledgeModel
     {
         public IEnumerable<KnowledgesModel> ToKnowledgeModel(IEnumerable<Knowledge> result);
+        public Knowledge ToKnowledge(KnowledgesModel result);
     }
 }

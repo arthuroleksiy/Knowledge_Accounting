@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "hRhhYttTNelWTyudoQAT1so5RNenWKxmGo6g/5LM5X2JSyaq3OgalFtGWUEZBSHa9E4rIuds+tgiC11gq9ijlA==",
+  "dgSpecHash": "e5pTRbqkcY4T9FBvQ5pn28OiFzIU672Xl9/nOgUD5kzCjUT0BdnckMF5Swp0znH1RoT+D38Rn5XMoPjG6Q3Rdw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Артур\\source\\repos\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Артур\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\Артур\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.0\\automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512",
+    "C:\\Users\\Артур\\.nuget\\packages\\bcrypt.net-next\\4.0.0\\bcrypt.net-next.4.0.0.nupkg.sha512",
     "C:\\Users\\Артур\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
     "C:\\Users\\Артур\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\Артур\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

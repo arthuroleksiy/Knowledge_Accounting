@@ -45,27 +45,12 @@ namespace BLL.Services
         public IEnumerable<QuestionsModel> GetAll()
         {
             var result = UnitOfWork.QuestionRepository.FindAll();
-            //return mapper.Map<IEnumerable<Question>, List<QuestionsModel>>(result);
-
-            /*List<QuestionsModel> questionsModels = new List<QuestionsModel>();
-            foreach (var i in result)
-            {
-                QuestionsModel questionsModel = new QuestionsModel();
-                questionsModel.QuestionId = i.QuestionId;
-                questionsModel.QuestionString = i.QuestionString;
-                questionsModel.KnowledgeId = i.KnowledgeId;
-                var res = i.Answers.Where(j => j.QuestionId == i.QuestionId).Select(j => j);
-                questionsModel.Answers = mapper.Map<IEnumerable<Answer>, List<AnswersModel>>(res);
-
-                questionsModels.Add(questionsModel);
-            }*/
             return this.QuestionToQuestionModel.ToQuestionModel(result);
             
         }
 
         public Task<QuestionsModel> GetByIdAsync(int id)
         {
-            //IEnumerable<Question> list = new List<Knowledge>();
             return Task.Run(() =>
             {
                 var task = UnitOfWork.QuestionRepository.GetByIdAsync(id);

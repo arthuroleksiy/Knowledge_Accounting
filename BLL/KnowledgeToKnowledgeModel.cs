@@ -29,7 +29,6 @@ namespace BLL
                 KnowledgesModel knowledgesModel = new KnowledgesModel();
                 knowledgesModel.KnowledgeId = i.KnowledgeId;
                 knowledgesModel.KnowledgeName = i.KnowledgeName;
-               // questionsModel. = i.KnowledgeId;
                 var res = i.Questions.Where(j => j.KnowledgeId == i.KnowledgeId).Select(j => j);
                 knowledgesModel.Questions = questionToQuestionModel.ToQuestionModel(res).ToList();
 
@@ -38,6 +37,15 @@ namespace BLL
             return knowledgesModels.ToArray();
         }
 
-        
+
+        public Knowledge ToKnowledge(KnowledgesModel result)
+        {
+            Knowledge krm = new Knowledge();
+            krm.KnowledgeId = result.KnowledgeId;
+            krm.KnowledgeName = result.KnowledgeName;
+            krm.Questions = Mapper.Map<IEnumerable<QuestionsModel>, List<Question>>(result.Questions);
+            krm.AllTestId = result.AllTestId;
+            return krm;
+        }
     }
 }

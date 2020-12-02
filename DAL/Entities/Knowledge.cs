@@ -9,11 +9,10 @@ namespace DAL.Entities
 {
     public class Knowledge:BaseEntity
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int KnowledgeId { get; set; }
         public string KnowledgeName { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
-
+        //public virtual ICollection<Knowledge> Knowledges { get; set; }
         [ForeignKey("AllTestId")]
         public int AllTestId { get; set; }
         [NotMapped]

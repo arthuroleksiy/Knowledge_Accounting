@@ -6,6 +6,7 @@ using BLL.Interfaces;
 using BLL.Models;
 using BLL.Services;
 using DAL.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 namespace WebApplication1.Controllers
@@ -21,51 +22,77 @@ namespace WebApplication1.Controllers
         }
         
         IUserService UserService { get; }
-        /*[HttpGet]
-        public ActionResult<ApplicationUser> Get(string email)
-        {
-            return Ok(UserService.GetUserByEmail(email).Result);
 
-        }*/
-
-
+        [AllowAnonymous]
         [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate(AuthenticateRequest model)
+        public async Task<IActionResult> Authenticate([FromBody] AuthenticateRequest model)
         {
-            var response = await UserService.Authenticate(model);
+            try
+            {
+                var response = await UserService.Authenticate(model);
 
-            if (response == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+                if (response == null)
+                    return BadRequest(new { message = "Username or password is incorrect" });
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
-        [Authorize]
+        [Authorize(Roles = Roles.Admin)]
         [HttpGet]
         public IActionResult GetAll()
         {
-            var users = UserService.GetAll();
-            return Ok(users);
+            try
+            {
+                var users = UserService.GetAll();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost("AddUser")]
         public async Task<ActionResult> AddUser([FromBody] UserModel userModel)
         {
 
-            await UserService.CreateUser(userModel);
-            //return CreatedAtRoute("GetById", new { id = bookModel.Id }, bookModel);
-            return Ok(userModel);
-            //return CreatedAtRoute("GetById", new { id = bookModel.Id }, bookModel);
+            try
+            {
+                if (userModel == null)
+                {
+                    return BadRequest("Model object is null");
+                }
+                await UserService.CreateUser(userModel); 
+                return CreatedAtRoute("Username", new { id = userModel.UserName }, userModel);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost("AddAdmin")]
         public async Task<ActionResult> AddAdmin([FromBody] UserModel userModel)
         {
-
-            await UserService.CreateAdmin(userModel);
-            //return CreatedAtRoute("GetById", new { id = bookModel.Id }, bookModel);
-            return Ok(userModel);
-            //return CreatedAtRoute("GetById", new { id = bookModel.Id }, bookModel);
+            try
+            {
+                if (userModel == null)
+                {
+                    return BadRequest("Model object is null");
+                }
+                await UserService.CreateAdmin(userModel);
+                return CreatedAtRoute("Admin name", new { id = userModel.UserName }, userModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }

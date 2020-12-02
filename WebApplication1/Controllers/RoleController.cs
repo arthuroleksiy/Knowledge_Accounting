@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class RoleController: Controller
+    public class RoleController: ControllerBase
     {
         public RoleController(IRoleService question)
         {
@@ -24,18 +24,33 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<RoleModel>> Get()
         {
-            return RoleService.GetAll().ToArray();
+            try
+            {
+                var result = RoleService.GetAll().ToArray();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
 
         }
 
         [HttpPost]
         public async Task<ActionResult> Add([FromBody] RoleModel questionsModel)
         {
-
-            await RoleService.AddAsync(questionsModel);
-            //return CreatedAtRoute("GetById", new { id = bookModel.Id }, bookModel);
-            return Ok(questionsModel);
-            //return CreatedAtRoute("GetById", new { id = bookModel.Id }, bookModel);
+            try {
+                if (questionsModel == null)
+                {
+                    return BadRequest("Question object is null");
+                }
+                await RoleService.AddAsync(questionsModel);
+                return Ok(questionsModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }

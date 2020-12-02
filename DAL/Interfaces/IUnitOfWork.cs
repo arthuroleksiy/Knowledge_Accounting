@@ -16,6 +16,7 @@ namespace DAL.Interfaces
          IKnowledgeResultsRepository KnowledgeResultRepository { get; }
          IAnswerResultsRepository AnswersResultsReposistory { get; }
          IQuestionResultsRepository QuestionResultRepository { get; }
+         ITestResultsRepository TestResultsRepository { get; }
         //UserManager<ApplicationUser> UserManager { get; }
         //SignInManager<ApplicationUser> SignInManager { get; }
         Task<int> SaveAsync();

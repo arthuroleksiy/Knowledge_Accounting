@@ -35,7 +35,8 @@ namespace DAL.Repositories
         {
             return Task.Run(() =>
             {
-                db.Knowledges.Remove(db.Knowledges.Find(id));
+                var result = db.Knowledges.Find(id);
+                db.Knowledges.Remove(result);
             });
         }
 

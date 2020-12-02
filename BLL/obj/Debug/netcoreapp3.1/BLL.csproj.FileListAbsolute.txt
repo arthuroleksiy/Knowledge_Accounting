@@ -1,6 +1,7 @@
 C:\Users\Артур\source\repos\WebApplication1\BLL\obj\Debug\netcoreapp3.1\BLL.csprojAssemblyReference.cache
 C:\Users\Артур\source\repos\WebApplication1\BLL\obj\Debug\netcoreapp3.1\BLL.AssemblyInfoInputs.cache
 C:\Users\Артур\source\repos\WebApplication1\BLL\obj\Debug\netcoreapp3.1\BLL.AssemblyInfo.cs
+C:\Users\Артур\source\repos\WebApplication1\BLL\obj\Debug\netcoreapp3.1\BLL.csproj.CoreCompileInputs.cache
 C:\Users\Артур\source\repos\WebApplication1\BLL\bin\Debug\netcoreapp3.1\BLL.deps.json
 C:\Users\Артур\source\repos\WebApplication1\BLL\bin\Debug\netcoreapp3.1\BLL.dll
 C:\Users\Артур\source\repos\WebApplication1\BLL\bin\Debug\netcoreapp3.1\BLL.pdb
@@ -9,4 +10,3 @@ C:\Users\Артур\source\repos\WebApplication1\BLL\bin\Debug\netcoreapp3.1\DAL
 C:\Users\Артур\source\repos\WebApplication1\BLL\obj\Debug\netcoreapp3.1\BLL.csproj.CopyComplete
 C:\Users\Артур\source\repos\WebApplication1\BLL\obj\Debug\netcoreapp3.1\BLL.dll
 C:\Users\Артур\source\repos\WebApplication1\BLL\obj\Debug\netcoreapp3.1\BLL.pdb
-C:\Users\Артур\source\repos\WebApplication1\BLL\obj\Debug\netcoreapp3.1\BLL.csproj.CoreCompileInputs.cache

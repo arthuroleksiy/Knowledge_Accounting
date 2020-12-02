@@ -22,30 +22,54 @@ namespace BLL.Services
             this.Mapper = Mapper;
             this.KnowledgeToKnowledgeModel = KnowledgeToKnowledgeModel;
         }
-        public Task AddAsync(KnowledgesModel model)
+        public async Task AddAsync(KnowledgesModel model)
         {
-            Knowledge knowledge = Mapper.Map<Knowledge>(model);
+            ///Knowledge knowledge = Mapper.Map<Knowledge>(model);
+            /*
+             *var knowledge = KnowledgeResultToKnowledgeResultModel.ToKnowledge(result, userId);
 
-            return Task.Run(() => {
-                UnitOfWork.KnowledgeRepository.AddAsync(knowledge);
-                UnitOfWork.SaveAsync();
-            });
+            List<QuestionResult> qr = new List<QuestionResult>();
+
+            foreach(var i in knowledge.QuestionResults)
+            {
+                qr.Add(new QuestionResult { QuestionId = i.QuestionId, AnswerResult = new AnswerResult { AnswerId = i.AnswerResult.AnswerId } });
+            }
+            await UnitOfWork.KnowledgeResultRepository.AddAsync(new KnowledgeResult {  KnowledgeId = knowledge.KnowledgeId, UserId = knowledge.UserId, Date = knowledge.Date, Result = knowledge.Result, QuestionResults = qr   });
+
+            await UnitOfWork.SaveAsync();
+            */
+
+            var knowledge = KnowledgeToKnowledgeModel.ToKnowledge(model);
+
+            List<Question> qr = new List<Question>();
+            List<Answer> ar;
+            foreach (var i in knowledge.Questions)
+            {
+
+                ar = new List<Answer>();
+                foreach(var j in i.Answers)
+                {
+                    ar.Add(new Answer { AnswerString = j.AnswerString, CorrectAnswer = j.CorrectAnswer  });
+                }
+
+                qr.Add(new Question { QuestionString = i.QuestionString, Answers = ar  });
+
+            }
+                await UnitOfWork.KnowledgeRepository.AddAsync(new Knowledge { KnowledgeName = knowledge.KnowledgeName, Questions = qr, AllTestId = 1 });
+                await UnitOfWork.SaveAsync();
         }
 
-        public Task DeleteByIdAsync(int modelId)
+        public async Task DeleteByIdAsync(int modelId)
         {
-            return Task.Run(() =>
-            {
-                UnitOfWork.KnowledgeRepository.DeleteByIdAsync(modelId);
-                UnitOfWork.SaveAsync();
-            });
+             await UnitOfWork.KnowledgeRepository.DeleteByIdAsync(modelId);
+             await UnitOfWork.SaveAsync();
+           
         }
 
         public IEnumerable<KnowledgesModel> GetAll()
         {
             var result = UnitOfWork.KnowledgeRepository.FindAll();
             return KnowledgeToKnowledgeModel.ToKnowledgeModel(result);
-            //return Mapper.Map<IEnumerable<Knowledge>, List<KnowledgesModel>>(result);
         }
 
         public Task<KnowledgesModel> GetByIdAsync(int id)
@@ -56,8 +80,6 @@ namespace BLL.Services
             {
                 var task = UnitOfWork.KnowledgeRepository.GetByIdAsync(id);
                 return Mapper.Map<Knowledge, KnowledgesModel>(task.Result);
-
-                //return KnowledgeToKnowledgeModel.ToKnowledgeModel(task.Result);
             });
 
         }

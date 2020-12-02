@@ -14,7 +14,5 @@ namespace BLL.Services
             this.UnitOfWork = UnitOfWork;
         }
 
-        //public Task Add
-
     }
 }
