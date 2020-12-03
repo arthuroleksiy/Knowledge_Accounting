@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
 
         ITestResultService TestResultService { get; }
 
-        [Authorize(Roles = Roles.User)]
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<KnowledgeResultModel>> GetAllResults()
         {
@@ -44,7 +44,8 @@ namespace WebApplication1.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-      
+
+        
         [Authorize(Roles = Roles.User)]
         [HttpPost]
         public async Task<ActionResult> ProcessResult([FromBody] KnowledgeResultModel knowledgeResultModel)
@@ -66,7 +67,8 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [Authorize(Roles = Roles.Admin)]
+
+        [Authorize]
         [HttpPost("GetSpecificResults")]
         public ActionResult<IEnumerable<KnowledgeResultModel>> GetSpecificResults(SpecificResultModel specificResult)
         {

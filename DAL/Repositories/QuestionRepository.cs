@@ -32,6 +32,24 @@ namespace DAL.Repositories
             }
         }
 
+        public Task DeleteAnswerByQuestionIdAsync(int id)
+        {
+            return Task.Run(() =>
+            {
+                var questions = db.Questions.Find(id);
+
+                if (questions.Answers.Count > 0) {
+
+                    do
+                    {
+                        var answer = questions.Answers.First();
+                        questions.Answers.Remove(answer);
+                    }
+                    while (questions.Answers.Count > 0);
+                }
+            });
+        }
+
         public Task DeleteByIdAsync(int id)
         {
             return Task.Run(() =>

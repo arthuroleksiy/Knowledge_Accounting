@@ -3,21 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApplication1.Migrations
 {
-    public partial class right : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "AllTests",
-                columns: table => new
-                {
-                    AllTestId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AllTests", x => x.AllTestId);
-                });
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -63,26 +52,13 @@ namespace WebApplication1.Migrations
                 name: "Knowledges",
                 columns: table => new
                 {
-                    KnowledgeId = table.Column<int>(nullable: false),
-                    KnowledgeName = table.Column<string>(nullable: true),
-                    AllTestId = table.Column<int>(nullable: false),
-                    KnowledgeId1 = table.Column<int>(nullable: true)
+                    KnowledgeId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    KnowledgeName = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Knowledges", x => x.KnowledgeId);
-                    table.ForeignKey(
-                        name: "FK_Knowledges_AllTests_AllTestId",
-                        column: x => x.AllTestId,
-                        principalTable: "AllTests",
-                        principalColumn: "AllTestId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Knowledges_Knowledges_KnowledgeId1",
-                        column: x => x.KnowledgeId1,
-                        principalTable: "Knowledges",
-                        principalColumn: "KnowledgeId",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,8 +128,7 @@ namespace WebApplication1.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
-                    RoleId = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false)
+                    RoleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -226,7 +201,7 @@ namespace WebApplication1.Migrations
                 {
                     QuestionId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    QuestionString = table.Column<string>(nullable: true),
+                    QuestionString = table.Column<string>(maxLength: 200, nullable: false),
                     KnowledgeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -246,7 +221,7 @@ namespace WebApplication1.Migrations
                 {
                     AnswerId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AnswerString = table.Column<string>(nullable: true),
+                    AnswerString = table.Column<string>(maxLength: 200, nullable: false),
                     QuestionId = table.Column<int>(nullable: false),
                     CorrectAnswer = table.Column<bool>(nullable: false)
                 },
@@ -314,52 +289,24 @@ namespace WebApplication1.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AllTests",
-                column: "AllTestId",
-                value: 1);
-
-            migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "e6f9c230-41d8-434c-8140-6713a021b651", "Admin", "ADMIN" },
-                    { 2, "dc278b06-eeaa-4827-8a5e-826b48d9e452", "User", "USER" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[,]
-                {
-                    { 1, 0, "e0f57b6b-83c9-4190-a11d-8a3283478c36", "arturoleksii@gmail.com", false, false, null, null, "ARTUR", "$2a$11$mXtAYK.LhjXJjYnt6lJY5egRJ32yJBrIDT6QVYcvU/Dohll1y4J0S", null, false, "7cb1bbe1-df5c-4412-a1b2-73bf7efa4283", false, "Arthur" },
-                    { 2, 0, "1034c4d6-65b2-4d39-8b0e-c49429c7bbab", "User@gmail.com", false, false, null, null, "USER", "$2a$11$pww0XLN9Njtew/QDxTigB.KSpXPPFOOnRJwHuSwKwZfQ8Ps0hyjeC", null, false, null, false, "User" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "UserId", "RoleId", "Discriminator" },
-                values: new object[,]
-                {
-                    { 1, 1, "UserRole" },
-                    { 2, 2, "UserRole" }
+                    { 1, "ddee1616-3825-42ee-a6bb-3ac478619a4d", "Admin", "ADMIN" },
+                    { 2, "b744a278-8b55-4d29-93aa-93be5b442b1e", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Knowledges",
-                columns: new[] { "KnowledgeId", "AllTestId", "KnowledgeId1", "KnowledgeName" },
+                columns: new[] { "KnowledgeId", "KnowledgeName" },
                 values: new object[,]
                 {
-                    { 1, 1, null, "C# essentials" },
-                    { 2, 1, null, "Javascript" },
-                    { 3, 1, null, "SQL" },
-                    { 4, 1, null, "OOP" }
+                    { 1, "C# essentials" },
+                    { 2, "Javascript" },
+                    { 3, "SQL" },
+                    { 4, "OOP" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "KnowledgeResults",
-                columns: new[] { "KnowledgeResultId", "Date", "KnowledgeId", "Result", "UserId" },
-                values: new object[] { 1, new DateTime(2020, 11, 28, 14, 59, 0, 797, DateTimeKind.Local).AddTicks(7534), 1, 60, 2 });
 
             migrationBuilder.InsertData(
                 table: "Questions",
@@ -397,13 +344,15 @@ namespace WebApplication1.Migrations
                 values: new object[,]
                 {
                     { 1, ":", false, 1 },
+                    { 58, "Select unique", false, 15 },
+                    { 57, "Select distinct", true, 15 },
                     { 56, "End", false, 14 },
                     { 55, "LIKE", true, 14 },
                     { 54, "FROM", false, 14 },
                     { 53, "GET", false, 14 },
                     { 52, "Sort", false, 13 },
+                    { 59, "Select Different", false, 15 },
                     { 51, "Order by", true, 13 },
-                    { 50, "Order", false, 13 },
                     { 49, "Sort by", false, 13 },
                     { 48, "None of the above", false, 12 },
                     { 47, "Delete FirstName = 'Peter' from Persons", false, 12 },
@@ -411,13 +360,10 @@ namespace WebApplication1.Migrations
                     { 45, "Delete from Persons where FirstName = 'Peter'", true, 12 },
                     { 44, "select * from Persons where FirstName = '%a%'", false, 11 },
                     { 43, "select * from Persons where FirstName Like '%a'", true, 11 },
+                    { 50, "Order", false, 13 },
                     { 42, "select * from Persons where FirstName='a'", false, 11 },
-                    { 41, "select * from Persons where FirstName Like 'a%'", false, 11 },
-                    { 40, "var obj = new Object();", false, 10 },
-                    { 57, "Select distinct", true, 15 },
-                    { 58, "Select unique", false, 15 },
-                    { 59, "Select Different", false, 15 },
                     { 60, "<>=", false, 15 },
+                    { 62, "class employee implements data {}", false, 16 },
                     { 78, "Sealed class", false, 20 },
                     { 77, "Static class", false, 20 },
                     { 76, "base", false, 19 },
@@ -425,22 +371,19 @@ namespace WebApplication1.Migrations
                     { 74, "overrides", false, 19 },
                     { 73, "overloads", false, 19 },
                     { 72, "None of the above", false, 18 },
+                    { 61, "class employee : data {}", true, 16 },
                     { 71, "this", false, 18 },
-                    { 39, "var obj = { name = \"Steve\"};", true, 10 },
-                    { 70, "base", true, 18 },
+                    { 69, "upper", false, 18 },
                     { 68, "All of the above", false, 17 },
                     { 67, "Private", false, 17 },
                     { 66, "Protected", false, 17 },
                     { 65, "Public", true, 17 },
                     { 64, "None of the mentioned", false, 16 },
                     { 63, "class employee imports data {}", false, 16 },
-                    { 62, "class employee implements data {}", false, 16 },
-                    { 61, "class employee : data {}", true, 16 },
-                    { 69, "upper", false, 18 },
-                    { 79, "Abstract class", true, 20 },
-                    { 38, "var obj = { name: \"Steve\"};", false, 10 },
-                    { 36, "Object", false, 9 },
-                    { 18, "!=", false, 5 },
+                    { 70, "base", true, 18 },
+                    { 41, "select * from Persons where FirstName Like 'a%'", false, 11 },
+                    { 40, "var obj = new Object();", false, 10 },
+                    { 39, "var obj = { name = \"Steve\"};", true, 10 },
                     { 17, ">=", false, 5 },
                     { 16, "End", false, 4 },
                     { 15, "Constructor", false, 4 },
@@ -448,8 +391,8 @@ namespace WebApplication1.Migrations
                     { 13, "Destructor", true, 4 },
                     { 12, "None of the above", false, 3 },
                     { 11, "No difference between both operators", false, 3 },
+                    { 18, "!=", false, 5 },
                     { 10, "‘=’ operator is used to assign values from one variable to another variable, ‘==’ operator is used to compare value between two variables", true, 3 },
-                    { 9, "‘==’ operator is used to assign values from one variable to another variable,  ‘=’ operator is used to compare value between two variables", false, 3 },
                     { 8, "None of the above", false, 2 },
                     { 7, "Any number", true, 2 },
                     { 6, "2", false, 2 },
@@ -457,49 +400,29 @@ namespace WebApplication1.Migrations
                     { 4, "#", false, 1 },
                     { 3, ".", true, 1 },
                     { 2, "::", false, 1 },
+                    { 9, "‘==’ operator is used to assign values from one variable to another variable,  ‘=’ operator is used to compare value between two variables", false, 3 },
                     { 19, "<=", false, 5 },
                     { 20, "<>=", true, 5 },
-                    { 80, "Derived class", false, 20 },
-                    { 27, "string \"..........\"", true, 7 },
+                    { 21, "var x = myFunc()", false, 6 },
+                    { 38, "var obj = { name: \"Steve\"};", false, 10 },
+                    { 37, "var obj = {};", false, 10 },
+                    { 36, "Object", false, 9 },
                     { 35, "No output", false, 9 },
                     { 34, "null", false, 9 },
                     { 33, "0", true, 9 },
-                    { 21, "var x = myFunc()", false, 6 },
-                    { 22, "myfunc", true, 6 },
-                    { 23, "x = myfunc()", false, 6 },
-                    { 24, "myfunc()", false, 6 },
-                    { 25, "string \"10\"", false, 7 },
-                    { 26, "array of 10 empty strings", false, 7 },
-                    { 37, "var obj = {};", false, 10 },
-                    { 28, "This statement will cause an error", false, 7 },
-                    { 29, "defines a new two-dimentional array a whose dimentions are 2 and 4", false, 8 },
-                    { 30, "defines an array a and assigns the values 2 and 4 to a[1] and a[2]", false, 8 },
+                    { 32, "defines a three-element array whose elements have indexes 2 through 4", false, 8 },
                     { 31, "defines an array a andd assigns the values 2 and 4 to a[0] and a[1]", true, 8 },
-                    { 32, "defines a three-element array whose elements have indexes 2 through 4", false, 8 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "QuestionResults",
-                columns: new[] { "QuestionResultId", "KnowledgeResultId", "QuestionId" },
-                values: new object[,]
-                {
-                    { 2, 1, 2 },
-                    { 4, 1, 4 },
-                    { 3, 1, 3 },
-                    { 5, 1, 5 },
-                    { 1, 1, 1 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AnswerResults",
-                columns: new[] { "AnswerResultId", "AnswerId", "QuestionResultId" },
-                values: new object[,]
-                {
-                    { 1, 3, 1 },
-                    { 2, 5, 2 },
-                    { 3, 10, 3 },
-                    { 4, 13, 4 },
-                    { 5, 17, 5 }
+                    { 30, "defines an array a and assigns the values 2 and 4 to a[1] and a[2]", false, 8 },
+                    { 29, "defines a new two-dimentional array a whose dimentions are 2 and 4", false, 8 },
+                    { 28, "This statement will cause an error", false, 7 },
+                    { 27, "string \"..........\"", true, 7 },
+                    { 26, "array of 10 empty strings", false, 7 },
+                    { 25, "string \"10\"", false, 7 },
+                    { 24, "myfunc()", false, 6 },
+                    { 23, "x = myfunc()", false, 6 },
+                    { 22, "myfunc", true, 6 },
+                    { 79, "Abstract class", true, 20 },
+                    { 80, "Derived class", false, 20 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -568,16 +491,6 @@ namespace WebApplication1.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Knowledges_AllTestId",
-                table: "Knowledges",
-                column: "AllTestId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Knowledges_KnowledgeId1",
-                table: "Knowledges",
-                column: "KnowledgeId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_QuestionResults_KnowledgeResultId",
                 table: "QuestionResults",
                 column: "KnowledgeResultId");
@@ -633,9 +546,6 @@ namespace WebApplication1.Migrations
 
             migrationBuilder.DropTable(
                 name: "Knowledges");
-
-            migrationBuilder.DropTable(
-                name: "AllTests");
         }
     }
 }

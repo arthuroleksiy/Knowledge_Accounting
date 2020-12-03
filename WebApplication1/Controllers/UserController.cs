@@ -57,6 +57,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("AddUser")]
         public async Task<ActionResult> AddUser([FromBody] UserModel userModel)
         {
@@ -77,6 +78,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [Authorize(Roles = Roles.Admin)]
         [HttpPost("AddAdmin")]
         public async Task<ActionResult> AddAdmin([FromBody] UserModel userModel)
         {

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201128125901_right")]
-    partial class right
+    [Migration("20201202120040_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,22 +21,6 @@ namespace WebApplication1.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DAL.Entities.AllTest", b =>
-                {
-                    b.Property<int>("AllTestId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AllTestId");
-
-                    b.ToTable("AllTests");
-
-                    b.HasData(
-                        new
-                        {
-                            AllTestId = 1
-                        });
-                });
-
             modelBuilder.Entity("DAL.Entities.Answer", b =>
                 {
                     b.Property<int>("AnswerId")
@@ -45,7 +29,9 @@ namespace WebApplication1.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AnswerString")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<bool>("CorrectAnswer")
                         .HasColumnType("bit");
@@ -654,14 +640,14 @@ namespace WebApplication1.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "e6f9c230-41d8-434c-8140-6713a021b651",
+                            ConcurrencyStamp = "ddee1616-3825-42ee-a6bb-3ac478619a4d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "dc278b06-eeaa-4827-8a5e-826b48d9e452",
+                            ConcurrencyStamp = "b744a278-8b55-4d29-93aa-93be5b442b1e",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -732,58 +718,21 @@ namespace WebApplication1.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "e0f57b6b-83c9-4190-a11d-8a3283478c36",
-                            Email = "arturoleksii@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "ARTUR",
-                            PasswordHash = "$2a$11$mXtAYK.LhjXJjYnt6lJY5egRJ32yJBrIDT6QVYcvU/Dohll1y4J0S",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "7cb1bbe1-df5c-4412-a1b2-73bf7efa4283",
-                            TwoFactorEnabled = false,
-                            UserName = "Arthur"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "1034c4d6-65b2-4d39-8b0e-c49429c7bbab",
-                            Email = "User@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "USER",
-                            PasswordHash = "$2a$11$pww0XLN9Njtew/QDxTigB.KSpXPPFOOnRJwHuSwKwZfQ8Ps0hyjeC",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "User"
-                        });
                 });
 
             modelBuilder.Entity("DAL.Entities.Knowledge", b =>
                 {
                     b.Property<int>("KnowledgeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AllTestId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("KnowledgeId1")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("KnowledgeName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("KnowledgeId");
-
-                    b.HasIndex("AllTestId");
-
-                    b.HasIndex("KnowledgeId1");
 
                     b.ToTable("Knowledges");
 
@@ -791,25 +740,21 @@ namespace WebApplication1.Migrations
                         new
                         {
                             KnowledgeId = 1,
-                            AllTestId = 1,
                             KnowledgeName = "C# essentials"
                         },
                         new
                         {
                             KnowledgeId = 2,
-                            AllTestId = 1,
                             KnowledgeName = "Javascript"
                         },
                         new
                         {
                             KnowledgeId = 3,
-                            AllTestId = 1,
                             KnowledgeName = "SQL"
                         },
                         new
                         {
                             KnowledgeId = 4,
-                            AllTestId = 1,
                             KnowledgeName = "OOP"
                         });
                 });
@@ -825,7 +770,9 @@ namespace WebApplication1.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("QuestionString")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.HasKey("QuestionId");
 
@@ -980,38 +927,6 @@ while (x > 0)?"
                         .IsUnique();
 
                     b.ToTable("AnswerResults");
-
-                    b.HasData(
-                        new
-                        {
-                            AnswerResultId = 1,
-                            AnswerId = 3,
-                            QuestionResultId = 1
-                        },
-                        new
-                        {
-                            AnswerResultId = 2,
-                            AnswerId = 5,
-                            QuestionResultId = 2
-                        },
-                        new
-                        {
-                            AnswerResultId = 3,
-                            AnswerId = 10,
-                            QuestionResultId = 3
-                        },
-                        new
-                        {
-                            AnswerResultId = 4,
-                            AnswerId = 13,
-                            QuestionResultId = 4
-                        },
-                        new
-                        {
-                            AnswerResultId = 5,
-                            AnswerId = 17,
-                            QuestionResultId = 5
-                        });
                 });
 
             modelBuilder.Entity("DAL.Entities.Results.KnowledgeResult", b =>
@@ -1040,16 +955,6 @@ while (x > 0)?"
                     b.HasIndex("UserId");
 
                     b.ToTable("KnowledgeResults");
-
-                    b.HasData(
-                        new
-                        {
-                            KnowledgeResultId = 1,
-                            Date = new DateTime(2020, 11, 28, 14, 59, 0, 797, DateTimeKind.Local).AddTicks(7534),
-                            KnowledgeId = 1,
-                            Result = 60,
-                            UserId = 2
-                        });
                 });
 
             modelBuilder.Entity("DAL.Entities.Results.QuestionResult", b =>
@@ -1072,38 +977,6 @@ while (x > 0)?"
                     b.HasIndex("QuestionId");
 
                     b.ToTable("QuestionResults");
-
-                    b.HasData(
-                        new
-                        {
-                            QuestionResultId = 1,
-                            KnowledgeResultId = 1,
-                            QuestionId = 1
-                        },
-                        new
-                        {
-                            QuestionResultId = 2,
-                            KnowledgeResultId = 1,
-                            QuestionId = 2
-                        },
-                        new
-                        {
-                            QuestionResultId = 3,
-                            KnowledgeResultId = 1,
-                            QuestionId = 3
-                        },
-                        new
-                        {
-                            QuestionResultId = 4,
-                            KnowledgeResultId = 1,
-                            QuestionId = 4
-                        },
-                        new
-                        {
-                            QuestionResultId = 5,
-                            KnowledgeResultId = 1,
-                            QuestionId = 5
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -1181,17 +1054,11 @@ while (x > 0)?"
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<int>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -1213,25 +1080,6 @@ while (x > 0)?"
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("DAL.Entities.UserRole", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<int>");
-
-                    b.HasDiscriminator().HasValue("UserRole");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 1,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            UserId = 2,
-                            RoleId = 2
-                        });
-                });
-
             modelBuilder.Entity("DAL.Entities.Answer", b =>
                 {
                     b.HasOne("DAL.Entities.Question", "Question")
@@ -1239,19 +1087,6 @@ while (x > 0)?"
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("DAL.Entities.Knowledge", b =>
-                {
-                    b.HasOne("DAL.Entities.AllTest", null)
-                        .WithMany("Tests")
-                        .HasForeignKey("AllTestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DAL.Entities.Knowledge", null)
-                        .WithMany("Knowledges")
-                        .HasForeignKey("KnowledgeId1");
                 });
 
             modelBuilder.Entity("DAL.Entities.Question", b =>

@@ -57,7 +57,7 @@ namespace WebApplication1
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             services.AddScoped<IAnswersRepository, AnswersRepository>();
-            services.AddScoped<IAllTestsRepository, AllTestsRepository>();
+            //services.AddScoped<IAllTestsRepository, AllTestsRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IKnowledgeRepository, KnowledgeRepository>();

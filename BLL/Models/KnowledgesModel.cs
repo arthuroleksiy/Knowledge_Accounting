@@ -1,6 +1,7 @@
 ﻿using DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace BLL.Models
@@ -8,6 +9,8 @@ namespace BLL.Models
     public class KnowledgesModel
     {
         public int KnowledgeId { get; set; }
+
+        [Required]
         public string KnowledgeName { get; set; }
         public ICollection<QuestionsModel> Questions { get; set; }
         public int AllTestId { get; set; }

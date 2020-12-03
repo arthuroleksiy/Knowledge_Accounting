@@ -5,6 +5,7 @@ using DAL.Entities;
 using DAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,6 +36,33 @@ namespace BLL.Services
                 var task = this.UnitOfWork.AnswersRepository.GetByIdAsync(id);
                 return mapper.Map<Answer, AnswersModel>(task.Result);
             });
+        }
+
+        public async Task<bool> CheckIfCorrect(List<AnswersModel> model)
+        {
+            foreach (var i in model) {
+                if(i.AnswerId < 0 || String.IsNullOrEmpty(i.AnswerString))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        public async Task<bool> IsValidForUpdate(List<AnswersModel> answers)
+        {
+            foreach (var i in answers)
+            {
+                if (String.IsNullOrEmpty(i.AnswerString) || !HasId(i.AnswerId))
+                    return false;
+            }
+
+            return true;
+        }
+
+        public bool HasId(int modelId)
+        {
+            return UnitOfWork.AnswersRepository.FindAll().Select(i => i.AnswerId).Contains(modelId);
         }
 
         public Task AddAsync(AnswersModel model)

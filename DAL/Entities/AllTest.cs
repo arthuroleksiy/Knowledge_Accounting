@@ -5,11 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace DAL.Entities
-{
+{/*
     public class AllTest: BaseEntity
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int AllTestId { get; set; }
         public virtual ICollection<Knowledge> Tests { get; set; }
-    }
+    }*/
 }

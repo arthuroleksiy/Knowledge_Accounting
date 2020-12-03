@@ -1,5 +1,7 @@
 ﻿using BLL.Interfaces;
 using BLL.Models;
+using DAL.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,6 +23,7 @@ namespace WebApplication1.Controllers
 
         IRoleService RoleService { get; }
 
+        [Authorize(Roles = Roles.Admin)]
         [HttpGet]
         public ActionResult<IEnumerable<RoleModel>> Get()
         {
@@ -35,7 +38,7 @@ namespace WebApplication1.Controllers
             }
 
         }
-
+        [Authorize(Roles = Roles.Admin)]
         [HttpPost]
         public async Task<ActionResult> Add([FromBody] RoleModel questionsModel)
         {

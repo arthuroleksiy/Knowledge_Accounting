@@ -40,6 +40,23 @@ namespace DAL.Repositories
             });
         }
 
+        public Task DeleteQuestionsByKnowledgeIdAsync(int id)
+        {
+            return Task.Run(() =>
+            {
+                var knowledges = db.Knowledges.Find(id);
+
+                if (knowledges.Questions.Count > 0)
+                {
+                    do
+                    {
+                        var question = knowledges.Questions.First();
+                        knowledges.Questions.Remove(question);
+                    }
+                    while (knowledges.Questions.Count > 0);
+                }
+            });
+        }
         public IQueryable<Knowledge> FindAll()
         {
             return db.Knowledges;

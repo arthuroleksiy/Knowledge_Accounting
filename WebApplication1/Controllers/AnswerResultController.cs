@@ -3,6 +3,7 @@ using BLL.Models;
 using BLL.Services;
 using DAL.Interfaces;
 using DAL.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace WebApplication1.Controllers
         }
 
         IAnswerResultService AnswerResultsService { get; }
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<AnswerResultModel>> GetAllResuts()
         {

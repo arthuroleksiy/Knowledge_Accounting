@@ -25,7 +25,7 @@ namespace BLL.Services
         public async Task AddAsync(RoleModel model)
         {
             await UnitOfWork.RoleRepository.AddAsync(mapper.Map<Role>(model));
-            UnitOfWork.SaveAsync();
+            await UnitOfWork.SaveAsync();
         }
 
 

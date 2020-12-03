@@ -14,11 +14,11 @@ namespace DAL.Entities
     public class Question: BaseEntity
     {
         public int QuestionId { get; set; }
+        [Required]
+        [StringLength(200, MinimumLength = 1, ErrorMessage = "Incorrect name length")]
         public string QuestionString { get; set; }
         public virtual ICollection<Answer> Answers { get; set; }
         public virtual ICollection<QuestionResult> QuestionResults { get; set; }
-        //public int CorrectAnswerId { get; set; }
-        //public virtual Answer CorrectAnswer { get; set; }
         public int KnowledgeId { get; set; }
         public virtual Knowledge Knowledge { get; set; }
     }

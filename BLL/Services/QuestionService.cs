@@ -17,11 +17,13 @@ namespace BLL.Services
         private IUnitOfWork UnitOfWork { get; set; }
         private IMapper mapper { get; set; }
         private IQuestionToQuestionModel QuestionToQuestionModel { get; set; }
-        public  QuestionService(IUnitOfWork UnitOfWork, IMapper Mapper, IQuestionToQuestionModel QuestionToQuestionModel)
+        private IAnswerService answerService { get; set; }
+        public  QuestionService(IUnitOfWork UnitOfWork, IMapper Mapper, IQuestionToQuestionModel QuestionToQuestionModel, IAnswerService answerService)
         {
             this.UnitOfWork = UnitOfWork;
             this.mapper = Mapper;
             this.QuestionToQuestionModel = QuestionToQuestionModel;
+            this.answerService = answerService;
         }
         public Task AddAsync(QuestionsModel model)
         {
@@ -40,6 +42,36 @@ namespace BLL.Services
                 UnitOfWork.QuestionRepository.DeleteByIdAsync(modelId);
                 UnitOfWork.SaveAsync();
             });
+        }
+        public async Task<bool> IsValidForUpdate(List<QuestionsModel> knowledge)
+        {
+            foreach(var i in knowledge)
+            {
+                var result = await answerService.IsValidForUpdate(i.Answers.ToList());
+                if (String.IsNullOrEmpty(i.QuestionString) || !HasId(i.QuestionId) || !result)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public bool HasId(int modelId)
+        {
+            return UnitOfWork.QuestionRepository.FindAll().Select(i => i.QuestionId).Contains(modelId);
+        }
+
+
+        public async Task<bool> CheckIfCorrect(List<QuestionsModel> model)
+        {
+            foreach (var i in model)
+            {
+                if (String.IsNullOrEmpty(i.QuestionString))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public IEnumerable<QuestionsModel> GetAll()
@@ -67,5 +99,7 @@ namespace BLL.Services
                 UnitOfWork.SaveAsync();
             });
         }
+
+        
     }
 }

@@ -8,7 +8,7 @@ namespace DAL.Interfaces
 {
     public interface IUnitOfWork
     {
-         IAllTestsRepository AllTestsRepository { get; }
+        // IAllTestsRepository AllTestsRepository { get; }
          IKnowledgeRepository KnowledgeRepository { get; }
          IAnswersRepository AnswersRepository { get; }
          IQuestionRepository QuestionRepository { get; }

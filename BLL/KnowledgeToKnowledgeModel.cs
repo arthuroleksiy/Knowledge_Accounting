@@ -36,7 +36,16 @@ namespace BLL
             }
             return knowledgesModels.ToArray();
         }
+        public KnowledgesModel ToKnowledgeModel(Knowledge result)
+        {
+            KnowledgesModel knowledgesModel = new KnowledgesModel();
+            knowledgesModel.KnowledgeId = result.KnowledgeId;
+            knowledgesModel.KnowledgeName = result.KnowledgeName;
+            var res = result.Questions.Where(j => j.KnowledgeId == result.KnowledgeId).Select(j => j);
+            knowledgesModel.Questions = questionToQuestionModel.ToQuestionModel(res).ToList();
 
+            return knowledgesModel;
+        }
 
         public Knowledge ToKnowledge(KnowledgesModel result)
         {
@@ -44,7 +53,7 @@ namespace BLL
             krm.KnowledgeId = result.KnowledgeId;
             krm.KnowledgeName = result.KnowledgeName;
             krm.Questions = Mapper.Map<IEnumerable<QuestionsModel>, List<Question>>(result.Questions);
-            krm.AllTestId = result.AllTestId;
+            //krm.AllTestId = result.AllTestId;
             return krm;
         }
     }

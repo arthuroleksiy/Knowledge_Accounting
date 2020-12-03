@@ -5,8 +5,8 @@ using System.Text;
 
 namespace DAL.Interfaces
 {
-    public interface IAllTestsRepository: IRepository<AllTest>
+    /*public interface IAllTestsRepository: IRepository<AllTest>
     {
            
-    }
+    }*/
 }

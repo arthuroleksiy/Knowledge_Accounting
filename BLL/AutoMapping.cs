@@ -34,7 +34,7 @@ namespace BLL
             CreateMap<Knowledge, KnowledgesModel>()
                 .ForMember(p => p.KnowledgeId, c => c.MapFrom(ca => ca.KnowledgeId))
                 .ForMember(am => am.KnowledgeName, a => a.MapFrom(ca => ca.KnowledgeName))
-                .ForMember(am => am.AllTestId, a => a.MapFrom(ca => ca.AllTestId))
+                //.ForMember(am => am.AllTestId, a => a.MapFrom(ca => ca.AllTestId))
                 //.ForMember(am => am.AllTest, a => a.Ignore())
                 .ReverseMap();
 

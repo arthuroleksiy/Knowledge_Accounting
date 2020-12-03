@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using BLL.Interfaces;
 using BLL.Models;
+using DAL.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +21,7 @@ namespace WebApplication1.Controllers
             this.KnowledgeService = readerService;
         }
         IKnowledgeService KnowledgeService { get; }
-
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<KnowledgesModel>> Get()
         {
@@ -34,14 +36,21 @@ namespace WebApplication1.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<AnswersModel>>> GetById(int id)
         {
             try 
             {
                 var result = await KnowledgeService.GetByIdAsync(id);
-                return Ok(result);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(result);
+                }
             }
             catch (Exception ex)
             {
@@ -49,6 +58,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [Authorize(Roles = Roles.Admin)]
         [HttpPost]
         public async Task<ActionResult> Add([FromBody] KnowledgesModel knowledgeModel)
         {
@@ -58,9 +68,11 @@ namespace WebApplication1.Controllers
                 {
                     return BadRequest("Model object is null");
                 }
-
+                if(!ModelState.IsValid)
+                {
+                    return BadRequest("Wrong input");
+                }
                 await KnowledgeService.AddAsync(knowledgeModel);
-                //return CreatedAtRoute("Knowledge added", new {   = knowledgeResultModel.Id }, knowledgeResultModel);
                 return CreatedAtRoute(new { name = knowledgeModel.KnowledgeName }, knowledgeModel);
             }
             catch (Exception ex)
@@ -69,6 +81,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [Authorize(Roles = Roles.Admin)]
         [HttpPut]
         public async Task<ActionResult> Update(KnowledgesModel knowledgeModel)
         {
@@ -76,10 +89,22 @@ namespace WebApplication1.Controllers
             {
                 if (knowledgeModel == null)
                 {
-
                     return BadRequest("Owner object is null");
                 }
+
+                if(!ModelState.IsValid)
+                {
+                    return BadRequest("Wrong input");
+                }
+                var isValid = await KnowledgeService.IsValidForUpdate(knowledgeModel);
+
+                if (!isValid)
+                {
+                    return BadRequest("Wrong input");
+                }
+
                 await KnowledgeService.UpdateAsync(knowledgeModel);
+                
                 return NoContent();
                 
             }
@@ -89,13 +114,22 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [Authorize(Roles = Roles.Admin)]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                await KnowledgeService.DeleteByIdAsync(id);
-                return Ok(id);
+                var validTodelete = await KnowledgeService.IsValidToDelete(id);
+                if (KnowledgeService.ContainsIdAsync(id) && validTodelete)
+                {
+                    await KnowledgeService.DeleteByIdAsync(id);
+                    return Ok(id);
+                }
+                else
+                {
+                    return BadRequest("Value has not been found or has connections with others");
+                }
             }
             catch (Exception ex)
             {

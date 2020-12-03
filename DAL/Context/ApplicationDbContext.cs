@@ -27,7 +27,7 @@ namespace DAL.Context
 
 
 
-        public DbSet<AllTest> AllTests { get; set; }
+        //public DbSet<AllTest> AllTests { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Knowledge> Knowledges { get; set; }
         public DbSet<Answer> Answers { get; set; }
@@ -41,7 +41,7 @@ namespace DAL.Context
         {
             optionsBuilder
                 .UseLazyLoadingProxies()
-                .UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = KnowledgeSystem4; Integrated Security = True;MultipleActiveResultSets=true;");
+                .UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = KnowledgeSystem5; Integrated Security = True;MultipleActiveResultSets=true;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -58,23 +58,25 @@ namespace DAL.Context
 
 
             modelBuilder.Entity<Answer>().HasKey(g => g.AnswerId);
-            modelBuilder.Entity<Answer>().HasOne(i => i.Question).WithMany(i => i.Answers).HasForeignKey(i => i.QuestionId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Answer>().HasOne(i => i.Question).WithMany(i => i.Answers).HasForeignKey(i => i.QuestionId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Question>().HasKey(g => g.QuestionId);
+           // modelBuilder.Entity<Question>().OnDelete(DeleteBehavior.Cascade);
             //modelBuilder.Entity<Question>().HasMany(i => i.Answers).WithOne(i => i.Question).HasForeignKey(j => j.QuestionId).OnDelete(DeleteBehavior.Restrict);
             //modelBuilder.Entity<Question>().HasOne(i => i.CorrectAnswer).WithOne(i => i.CorrectQuestion).HasForeignKey(o => o).OnDelete(DeleteBehavior.Restrict);
             //modelBuilder.Entity<Question>().HasOne(i => i.UserQuestion).WithOne(i => i.UsersAnswer).HasForeignKey<Question>(i => i.  ).OnDelete(DeleteBehavior.Restrict);
             //modelBuilder.Entity<Answer>().HasOne(i => i.CorrectQuestion).WithOne(i => i.CorrectAnswer).HasForeignKey<Answer>(o => o.).OnDelete(DeleteBehavior.Restrict);
             //modelBuilder.Entity<Answer>().HasOne(i => i.UserQuestion).WithOne(i => i.UsersAnswer).HasForeignKey<Answer>(i => i.).OnDelete(DeleteBehavior.Restrict);
-           // modelBuilder.Entity<Question>().HasOne(i => i.CorrectAnswer).WithOne(i=> i.CorrectQuestion).HasForeignKey<Answer>(p => p.CorrectQuestionId).OnDelete(DeleteBehavior.Restrict);
+            // modelBuilder.Entity<Question>().HasOne(i => i.CorrectAnswer).WithOne(i=> i.CorrectQuestion).HasForeignKey<Answer>(p => p.CorrectQuestionId).OnDelete(DeleteBehavior.Restrict);
             //modelBuilder.Entity<Question>().HasOne(i => i.UsersAnswer).WithOne(i => i.UserQuestion);
             //modelBuilder.Entity<Answer>().HasOne<Question>(i => i.Question).WithOne(i => i.CorrectAnswer).HasForeignKey<Question>(i => i.QuestionId);
             //modelBuilder.Entity<Answer>().HasOne<Question>(i => i.CorrectQuestion).WithOne(i => i.).HasForeignKey<Question>(i => i.QuestionId);
             modelBuilder.Entity<Knowledge>().HasKey(g => g.KnowledgeId);
             modelBuilder.Entity<Knowledge>().HasMany(q => q.Questions).WithOne(q => q.Knowledge).HasForeignKey(i => i.KnowledgeId)
             .OnDelete(DeleteBehavior.Cascade);
+           // modelBuilder.Entity<KnowledgeResult>().OnDelete(DeleteBehavior.Cascade);
 
 
-            modelBuilder.Entity<QuestionResult>().HasOne(i => i.Question).WithMany(i => i.QuestionResults).HasForeignKey(i => i.QuestionId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<QuestionResult>().HasOne(i => i.Question).WithMany(i => i.QuestionResults).HasForeignKey(i => i.QuestionId).OnDelete(DeleteBehavior.Cascade);
             //modelBuilder.Entity<AnswerResult>().HasOne(i => i.QuestionResult).WithOne(i => i.AnswerResult).HasForeignKey<QuestionResult>(i => i.QuestionResultId).OnDelete(DeleteBehavior.Restrict);
 
             // modelBuilder.Entity<QuestionResult>().HasOne(i => i.Question).WithMany(i => i.QuestionResults).HasForeignKey(i => i.QuestionId).OnDelete(DeleteBehavior.Restrict);
@@ -558,16 +560,16 @@ namespace DAL.Context
                 new Question { QuestionString = "Which of the following options represents the type of class which does not have its own objects but acts as a base class for its subclass?" ,CorrectAnswer = answers.Skip(78).Take(1).First() , Answers =answers.Skip(76).Take(4).ToList() , KnowledgeId = 4  }
             };*/
 
-            List<AllTest> allTest = new List<AllTest>() {
+           /* List<AllTest> allTest = new List<AllTest>() {
                 new AllTest{ AllTestId = 1 }
             };
 
-            modelBuilder.Entity<AllTest>().HasData(allTest);
+            modelBuilder.Entity<AllTest>().HasData(allTest);*/
             List<Knowledge> knowledge = new List<Knowledge>() {
-                 new Knowledge { KnowledgeId = 1 , KnowledgeName= "C# essentials", /*Questions = testQuestions.Take(5).ToList(),*/ AllTestId = 1},
-                 new Knowledge { KnowledgeId = 2 , KnowledgeName= "Javascript", /*Questions = testQuestions.Skip(5).Take(5).ToList(),*/ AllTestId = 1 },
-                 new Knowledge { KnowledgeId = 3 , KnowledgeName= "SQL", /*Questions = testQuestions.Skip(10).Take(5).ToList(),*/ AllTestId = 1 },
-                 new Knowledge { KnowledgeId = 4 , KnowledgeName= "OOP" , /*Questions = testQuestions.Skip(15).Take(5).ToList(),*/ AllTestId = 1}
+                 new Knowledge { KnowledgeId = 1 , KnowledgeName= "C# essentials", /*Questions = testQuestions.Take(5).ToList(),*/ },
+                 new Knowledge { KnowledgeId = 2 , KnowledgeName= "Javascript", /*Questions = testQuestions.Skip(5).Take(5).ToList(),*/  },
+                 new Knowledge { KnowledgeId = 3 , KnowledgeName= "SQL", /*Questions = testQuestions.Skip(10).Take(5).ToList(),*/  },
+                 new Knowledge { KnowledgeId = 4 , KnowledgeName= "OOP" , /*Questions = testQuestions.Skip(15).Take(5).ToList(),*/ }
              };
 
             modelBuilder.Entity<Knowledge>().HasData(knowledge);
@@ -702,19 +704,14 @@ namespace DAL.Context
 
 
             modelBuilder.Entity<ApplicationRole>().HasData(applicationRole); 
-            
+            /*
             List<ApplicationUser> applicationUser = new List<ApplicationUser>() {
             new ApplicationUser { Id = 1,  Email = "arturoleksii@gmail.com", UserName= "Arthur", SecurityStamp= Guid.NewGuid().ToString(), NormalizedUserName = "ARTUR", PasswordHash = BCrypt.Net.BCrypt.HashPassword("Ukrainakiev_234")},
             new ApplicationUser { Id = 2, Email = "User@gmail.com", UserName = "User", NormalizedUserName = "USER", ConcurrencyStamp = Guid.NewGuid().ToString(), PasswordHash = BCrypt.Net.BCrypt.HashPassword("User_1") }
             };
 
             modelBuilder.Entity<ApplicationUser>().HasData(applicationUser);
-            /*Task.Run(() =>
-            {
-                UserManager.AddToRoleAsync(applicationUser.First(),applicationRole.First().Name);
-                UserManager.AddToRoleAsync(applicationUser.Last(), applicationRole.Last().Name);
-
-            });*/
+            
             modelBuilder.Entity<UserRole>().HasData(
                 new UserRole { RoleId = 1, UserId = 1 },
                 new UserRole { RoleId = 2, UserId = 2 }
@@ -728,22 +725,16 @@ namespace DAL.Context
 
 
             List<QuestionResult> questionsResult = new List<QuestionResult>() {
-                new QuestionResult {QuestionResultId = 1 , QuestionId = 1, KnowledgeResultId = 1/*, AnswerResult =  new AnswerResult {AnswerId = 3, QuestionResultId = 1, AnswerResultId = 1}*/ },
-                new QuestionResult {QuestionResultId = 2,QuestionId = 2,  KnowledgeResultId = 1/*, AnswerResult = new AnswerResult {AnswerId = 5, QuestionResultId = 2, AnswerResultId = 2}*/ },
-                new QuestionResult {QuestionResultId = 3, QuestionId = 3, KnowledgeResultId = 1/*, AnswerResult =  new AnswerResult {AnswerId = 10, QuestionResultId = 3, AnswerResultId = 3}*/},
-                new QuestionResult {QuestionResultId = 4,QuestionId = 4,  KnowledgeResultId = 1/*, AnswerResult = new AnswerResult {AnswerId = 13, QuestionResultId = 4, AnswerResultId = 4}*/ },
-                new QuestionResult {QuestionResultId = 5,QuestionId = 5, KnowledgeResultId = 1/*, AnswerResult = new AnswerResult {AnswerId = 17, QuestionResultId = 5, AnswerResultId = 5}*/ }
+                new QuestionResult {QuestionResultId = 1 , QuestionId = 1, KnowledgeResultId = 1 },
+                new QuestionResult {QuestionResultId = 2,QuestionId = 2,  KnowledgeResultId = 1},
+                new QuestionResult {QuestionResultId = 3, QuestionId = 3, KnowledgeResultId = 1},
+                new QuestionResult {QuestionResultId = 4,QuestionId = 4,  KnowledgeResultId = 1},
+                new QuestionResult {QuestionResultId = 5,QuestionId = 5, KnowledgeResultId = 1}
             };
 
             modelBuilder.Entity<QuestionResult>().HasData(questionsResult);
             
-           // List<AnswerResult> answersResult = new List<AnswerResult>() {
-           //     new AnswerResult {AnswerId = 3/*, QuestionResultId = 1*/, AnswerResultId = 1, QuestionResult = questionsResult.Where(i => i.QuestionResultId == 1).First()},
-            //    new AnswerResult {AnswerId = 5/*, QuestionResultId = 2*/, AnswerResultId = 2, QuestionResult = questionsResult.Where(i => i.QuestionResultId == 1).First()},
-            //    new AnswerResult {AnswerId = 10/*, QuestionResultId = 3*/, AnswerResultId = 3, QuestionResult = questionsResult.Where(i => i.QuestionResultId == 1).First()},
-           //     new AnswerResult {AnswerId = 13/*, QuestionResultId = 4*/, AnswerResultId = 4, QuestionResult = questionsResult.Where(i => i.QuestionResultId == 1).First()},
-            //    new AnswerResult {AnswerId = 17/*, QuestionResultId = 5*/, AnswerResultId = 5, QuestionResult = questionsResult.Where(i => i.QuestionResultId == 1).First()}
-           //     };
+           
 
             List<AnswerResult> answersResult = new List<AnswerResult>() {
                 new AnswerResult {AnswerId = 3, QuestionResultId = 1, AnswerResultId = 1 },
@@ -754,7 +745,7 @@ namespace DAL.Context
                 };
 
 
-            modelBuilder.Entity<AnswerResult>().HasData(answersResult);
+            modelBuilder.Entity<AnswerResult>().HasData(answersResult);*/
         }
     }
 }

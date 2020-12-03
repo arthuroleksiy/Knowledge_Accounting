@@ -10,13 +10,13 @@ namespace DAL.Entities
     public class Knowledge:BaseEntity
     {
         public int KnowledgeId { get; set; }
+        [Required(ErrorMessage = "Name was not input")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "Incorrect name length")]
         public string KnowledgeName { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
-        //public virtual ICollection<Knowledge> Knowledges { get; set; }
-        [ForeignKey("AllTestId")]
-        public int AllTestId { get; set; }
-        [NotMapped]
-        public virtual AllTest AllTest { get; set; }
-        //public virtual ICollection<KnowledgeUser> KnowledgeUser { get; set; }
+        //[ForeignKey("AllTestId")]
+       // public int AllTestId { get; set; }
+       // [NotMapped]
+        //public virtual AllTest AllTest { get; set; }
     }
 }

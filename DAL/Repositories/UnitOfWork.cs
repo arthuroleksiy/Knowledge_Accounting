@@ -13,7 +13,7 @@ namespace DAL.Repositories
     public class UnitOfWork: IUnitOfWork
     {
         public readonly ApplicationDbContext db;
-        private IAllTestsRepository allTestsRepository;
+        //private IAllTestsRepository allTestsRepository;
         private IKnowledgeRepository knowledgeRepository;
         private IAnswersRepository answersReposistory;
         private IQuestionRepository questionRepository;
@@ -21,9 +21,7 @@ namespace DAL.Repositories
         private IAnswerResultsRepository answersResultsReposistory;
         private IQuestionResultsRepository questionResultRepository;
         private ITestResultsRepository testResultsRepository;
-        private IUserRepository userRepositry;
         private IRoleRepository roleRepositry;
-        //private ApplicationUserManager userManager;
         public UnitOfWork(ApplicationDbContext db)
         {
             this.db = db;
@@ -40,7 +38,7 @@ namespace DAL.Repositories
             }
         }
 
-        public IAllTestsRepository AllTestsRepository
+       /* public IAllTestsRepository AllTestsRepository
         {
             get
             {
@@ -49,12 +47,12 @@ namespace DAL.Repositories
 
                 return allTestsRepository;
             }
-        }
+        }*/
         public IKnowledgeRepository KnowledgeRepository
         {
             get
             {
-                if (allTestsRepository == null)
+                if (knowledgeRepository == null)
                     knowledgeRepository = new KnowledgeRepository(db);
 
                 return knowledgeRepository;

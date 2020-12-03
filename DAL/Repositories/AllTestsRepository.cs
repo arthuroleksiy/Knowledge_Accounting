@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
+    /*
     public class AllTestsRepository : IAllTestsRepository
     {
         private readonly ApplicationDbContext dbContext;
@@ -17,11 +18,6 @@ namespace DAL.Repositories
         {
             this.dbContext = dbContext;
         }
-        /*public Task AddAsync(AllTest entity)
-        {
-            throw new NotImplementedException();
-        }*/
-
 
         public Task DeleteByIdAsync(int id)
         {
@@ -62,5 +58,5 @@ namespace DAL.Repositories
         }
 
         
-    }
+    }*/
 }
