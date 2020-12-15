@@ -29,7 +29,6 @@ namespace WebApplication1.Controllers
 
         ITestResultService TestResultService { get; }
 
-        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<KnowledgeResultModel>> GetAllResults()
         {
@@ -68,7 +67,6 @@ namespace WebApplication1.Controllers
         }
 
 
-        [Authorize]
         [HttpPost("GetSpecificResults")]
         public ActionResult<IEnumerable<KnowledgeResultModel>> GetSpecificResults(SpecificResultModel specificResult)
         {
