@@ -21,7 +21,7 @@ namespace WebApplication1.Controllers
             this.KnowledgeService = readerService;
         }
         IKnowledgeService KnowledgeService { get; }
-        [Authorize]
+        
         [HttpGet]
         public ActionResult<IEnumerable<KnowledgesModel>> Get()
         {
@@ -36,7 +36,7 @@ namespace WebApplication1.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-        [Authorize]
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<AnswersModel>>> GetById(int id)
         {
