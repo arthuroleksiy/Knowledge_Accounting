@@ -23,7 +23,7 @@ namespace WebApplication1.Controllers
         }
 
         IAnswerResultService AnswerResultsService { get; }
-        [Authorize]
+        
         [HttpGet]
         public ActionResult<IEnumerable<AnswerResultModel>> GetAllResuts()
         {
